@@ -8,10 +8,14 @@ class SpellChecker:
         self._multiDic = md.MultiDictionary()
         self._view = view
 
-    def handleSentence(self, txtIn, language, modality):
-        txtIn = replaceChars(txtIn.lower())
+    def handleSentence(self):
+        txtIn=replaceChars(self._view.txtIn.value.lower())
+        words =txtIn.split()
 
-        words = txtIn.split()
+        txtIn.value = ""
+
+        modality = self._view.getRicerca()
+        language = self._view.getLanguage().lower
         paroleErrate = " - "
 
         match modality:
@@ -22,7 +26,10 @@ class SpellChecker:
                     if not parola.corretta:
                         paroleErrate = paroleErrate + str(parola) + " - "
                 t2 = time.time()
-                return paroleErrate, t2 - t1
+                tempo = t2-t1
+                self._view.txtOut.controls.append(ft.Text(paroleErrate))
+                self._view.txtOut.controls.append(ft.Text(f"tempo impiegato: {tempo}"))
+                self._view.page.update()
 
             case "Linear":
                 t1 = time.time()
@@ -31,7 +38,10 @@ class SpellChecker:
                     if not parola.corretta:
                         paroleErrate = paroleErrate + str(parola) + " "
                 t2 = time.time()
-                return paroleErrate, t2 - t1
+                tempo = t2 - t1
+                self._view.txtOut.controls.append(ft.Text(paroleErrate))
+                self._view.txtOut.controls.append(ft.Text(f"tempo impiegato: {tempo}"))
+                self._view.page.update()
 
             case "Dichotomic":
                 t1 = time.time()
@@ -40,7 +50,10 @@ class SpellChecker:
                     if not parola.corretta:
                         paroleErrate = paroleErrate + str(parola) + " - "
                 t2 = time.time()
-                return paroleErrate, t2 - t1
+                tempo = t2 - t1
+                self._view.txtOut.controls.append(ft.Text(paroleErrate))
+                self._view.txtOut.controls.append(ft.Text(f"tempo impiegato: {tempo}"))
+                self._view.page.update()
             case _:
                 return None
 
