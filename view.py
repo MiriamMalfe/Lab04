@@ -3,6 +3,11 @@ import flet as ft
 class View(object):
     def __init__(self, page: ft.Page):
         # Page
+        self.__btn = None
+        self.__text = None
+        self.__dd1 = None
+        self.__dd = None
+        self.txtOut = None
         self.page = page
         self.page.title = "TdP 2024 - Lab 04 - SpellChecker ++"
         self.page.horizontal_alignment = 'CENTER'
@@ -25,7 +30,6 @@ class View(object):
             ft.Row(spacing=30, controls=[self.__theme_switch, self.__title, ],
                    alignment=ft.MainAxisAlignment.START)
         )
-        self.txtOut=ft.ListView(expand=True)
 
         self.__dd = ft.Dropdown(label="Select language", options=[ft.dropdown.Option(key ="Italian", content = ft.Text(value = "Italian", color="pink")),
                                                                        ft.dropdown.Option(key="English", content=ft.Text(value="English", color="pink")),
@@ -38,13 +42,15 @@ class View(object):
         self.__dd1 = ft.Dropdown(label = "Search modality", options=[ft.dropdown.Option(key="Linear", content=ft.Text(value="Linear", color ="pink")),
                                                                      ft.dropdown.Option(key="Default", content=ft.Text(value="Default", color="pink")),
                                                                      ft.dropdown.Option(key="Dichotomic", content=ft.Text(value="Dichotomic", color="pink"))], width=170)
-        self.__dd2= ft.TextField(label ="Add your sentence here", color = "pink", width=450)
-        self.__dd3 = ft.ElevatedButton(text="Spell check", color = "pink", on_click=self.__controller.handleSentence)
+        self.__text= ft.TextField(label ="Add your sentence here", color = "pink", width=450)
+        self.__btn = ft.ElevatedButton(text="Spell check", color = "pink", on_click=self.__controller.handleSentence)
 
+        self.txtOut = ft.ListView(expand=True)  #expand=True -> gli dico che posso scorrere le varie opzioni della listView con la rotellina
 
-        row1 = (self.__dd1, self.__dd2, self.__dd3)
-        self.page.controls.append(ft.Row(row1, alignment=ft.MainAxisAlignment.CENTER))
-        self.page.controls.append(self.txtOut)
+        row1 = ft.Row([self.__dd1, self.__text, self.__btn])
+        row2= ft.Row([self.txtOut])
+
+        self.page.add(row1, row2)
         self.page.update()
 
 
