@@ -1,5 +1,6 @@
 import flet as ft
 
+
 class View(object):
     def __init__(self, page: ft.Page):
         # Page
@@ -12,6 +13,14 @@ class View(object):
         # UI elements
         self.__title = None
         self.__theme_switch = None
+        self.lingua = None
+        self.row1 = None
+        self.row2=None
+        self.mod=None
+        self.frase=None
+        self.b1=None
+        self.row3=None
+        self.ris = None
 
         # define the UI elements and populate the page
 
@@ -25,10 +34,21 @@ class View(object):
             ft.Row(spacing=30, controls=[self.__theme_switch, self.__title, ],
                    alignment=ft.MainAxisAlignment.START)
         )
-
+        self.lingua = ft.Dropdown(label="select language",
+                                  options=[ft.dropdown.Option("Italian"), ft.dropdown.Option("English"),
+                                           ft.dropdown.Option("Spanish")], width=800)
+        self.row1 = ft.Row([self.lingua], alignment=ft.MainAxisAlignment.CENTER)
+        self.page.controls.append(self.row1)
+        self.mod = ft.Dropdown(label="Select mode", options=[ft.dropdown.Option("Linear"), ft.dropdown.Option("Dichotomic"), ft.dropdown.Option("Default")] )
+        self.frase = ft.TextField(label= "Inserire una frase")
+        self.b1 = ft.ElevatedButton(text="Spell check", on_click= self.__controller.handleSentence)
+        self.row2 = ft.Row([self.mod, self.frase,self.b1], alignment=ft.MainAxisAlignment.CENTER)
+        self.page.controls.append(self.row2)
+        self.ris = ft.ListView(expand=True)
+        self.row3=ft.Row([self.ris])
+        self.page.controls.append(self.row3)
         # Add your stuff here
 
-        self.page.add([])
 
         self.page.update()
 
@@ -50,4 +70,7 @@ class View(object):
         # self.__txt_container.bgcolor = (
         #     ft.colors.GREY_900 if self.page.theme_mode == ft.ThemeMode.DARK else ft.colors.GREY_300
         # )
+
+
         self.page.update()
+

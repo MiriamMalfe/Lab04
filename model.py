@@ -60,6 +60,7 @@ class MultiDictionary:
                         found = True
             elif language == "italian":
                 for entry in self._italian.dict:
+                    print(entry +" "+word)
                     if entry == word:
                         found = True
             elif language == "spanish":

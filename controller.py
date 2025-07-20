@@ -8,9 +8,13 @@ class SpellChecker:
         self._multiDic = md.MultiDictionary()
         self._view = view
 
-    def handleSentence(self, txtIn, language, modality):
-        txtIn = replaceChars(txtIn.lower())
+    def handleSentence(self, e):
 
+        txtIn = self._view.frase.value
+        modality=self._view.mod.value
+        language = self._view.lingua.value.lower()
+
+        txtIn = replaceChars(txtIn.lower())
         words = txtIn.split()
         paroleErrate = " - "
 
@@ -22,7 +26,10 @@ class SpellChecker:
                     if not parola.corretta:
                         paroleErrate = paroleErrate + str(parola) + " - "
                 t2 = time.time()
-                return paroleErrate, t2 - t1
+                tempo = t2-t1
+                self._view.ris.controls.append(ft.Text(paroleErrate))   #per scrivere dentro al textView della view
+                self._view.ris.controls.append(ft.Text("Tempo impiegato:"+ str(tempo)))
+                self._view.page.update()
 
             case "Linear":
                 t1 = time.time()
@@ -31,7 +38,11 @@ class SpellChecker:
                     if not parola.corretta:
                         paroleErrate = paroleErrate + str(parola) + " "
                 t2 = time.time()
-                return paroleErrate, t2 - t1
+
+                tempo = t2 - t1
+                self._view.ris.controls.append(ft.Text(paroleErrate))  # per scrivere dentro al textView della view
+                self._view.ris.controls.append(ft.Text("Tempo impiegato:" + str(tempo)))
+                self._view.page.update()
 
             case "Dichotomic":
                 t1 = time.time()
@@ -40,7 +51,11 @@ class SpellChecker:
                     if not parola.corretta:
                         paroleErrate = paroleErrate + str(parola) + " - "
                 t2 = time.time()
-                return paroleErrate, t2 - t1
+                tempo = t2 - t1
+                self._view.ris.controls.append(ft.Text(paroleErrate))  # per scrivere dentro al textView della view
+                self._view.ris.controls.append(ft.Text("Tempo impiegato:" + str(tempo)))
+                self._view.page.update()
+
             case _:
                 return None
 
